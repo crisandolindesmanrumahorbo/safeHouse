@@ -32,7 +32,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         User user = userList.get(position);
         holder.textViewName.setText(user.name);
         holder.textViewEmail.setText(user.email);
-        holder.textViewID.setText("ID "+user.id);
+        holder.textViewID.setText(user.id);
     }
 
     @Override

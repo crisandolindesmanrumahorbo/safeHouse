@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#008577"
+    android:background="#FFB000"
     android:orientation="vertical"
     tools:context="RegisterActivity"
     android:scrollbarAlwaysDrawVerticalTrack="true">
@@ -22,24 +22,27 @@
             android:layout_centerVertical="true" />
 
         <TextView
+            android:elevation="4dp"
+            android:fontFamily="@font/source_sans_pro_semibold"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:id="@+id/login_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal"
-            android:text="New User Registration"
-            android:textColor="#fff"
-            android:textSize="26sp"
-            android:textStyle="bold"/>
+            android:text="New Resident Registration" />
 
         <RelativeLayout
+            android:background="@drawable/rounded_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_title"
+            android:backgroundTint="#ffff"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="70dp"
-            android:background="#fff"
             android:elevation="4dp"
             android:orientation="vertical"
             android:padding="20dp">
@@ -51,13 +54,16 @@
                 android:paddingTop="30dp">
 
                 <TextView
+                    android:fontFamily="@font/pt_sans_narrow"
                     android:labelFor="@id/text_email"
-                    android:text="nama"
-                    android:fontFamily="sans-serif-light"
+                    android:text="name"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <EditText
+                    android:theme="@style/EditTextTheme"
+                    android:fontFamily="@font/source_sans_pro"
                     android:id="@+id/edit_text_nama"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -69,13 +75,16 @@
                     android:singleLine="true" />
 
                 <TextView
+                    android:textSize="16sp"
+                    android:fontFamily="@font/pt_sans_narrow"
                     android:labelFor="@id/text_email"
                     android:text="email"
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <EditText
+                    android:theme="@style/EditTextTheme"
+                    android:fontFamily="@font/source_sans_pro"
                     android:id="@+id/edit_text_email"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -87,13 +96,16 @@
                     android:singleLine="true" />
 
                 <TextView
+                    android:fontFamily="@font/pt_sans_narrow"
                     android:labelFor="@id/edit_text_password"
                     android:text="id"
-                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <EditText
+                    android:theme="@style/EditTextTheme"
+                    android:fontFamily="@font/source_sans_pro"
                     android:id="@+id/edit_text_finger"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -104,13 +116,16 @@
                     android:singleLine="true" />
 
                 <TextView
+                    android:fontFamily="@font/pt_sans_narrow"
                     android:labelFor="@id/edit_text_password"
                     android:text="password"
-                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <EditText
+                    android:theme="@style/EditTextTheme"
+                    android:fontFamily="@font/source_sans_pro"
                     android:drawablePadding="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -124,12 +139,14 @@
                     android:id="@+id/button_register"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
-                    android:background="#d67601"
                     android:text="Sign Up"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:layout_margin="22dp"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/colorAccent"
+                    android:fontFamily="@font/source_sans_pro_semibold" />
 
             </LinearLayout>
 

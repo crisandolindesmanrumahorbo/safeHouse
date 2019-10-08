@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,16 +34,14 @@ import java.util.List;
 
 public class AdminActivity extends AppCompatActivity{
 
-    TextView jumlah, bedRoom, livingRoom;
+    TextView jumlah, bedRoom, livingRoom, nameCurrent, statusCurrent;
     DatabaseReference dref;
-    String status;
+    String email;
     Button btRegister, btNotify ,btUserList, btSignOut;
 
     private RecyclerView recyclerView;
     private UserAdapter adapter;
     private List<User> userList;
-
-    DatabaseReference dbUsers;
 
     private static final  String CHANNEL_ID = "safe_house";
     private static final String CHANNEL_NAME = "Safe House";
@@ -51,14 +50,17 @@ public class AdminActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
         jumlah = (TextView) findViewById(R.id.jumlah);
-        btRegister = (Button) findViewById(R.id.admin_register);
         jumlah.setVisibility(View.GONE);
+
+        btRegister = (Button) findViewById(R.id.admin_register);
+        btRegister.setVisibility(View.VISIBLE);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -70,33 +72,58 @@ public class AdminActivity extends AppCompatActivity{
         btNotify = (Button) findViewById(R.id.button_notify);
         btNotify.setVisibility(View.GONE);
         btUserList = (Button) findViewById(R.id.user_list);
+        btUserList.setVisibility(View.VISIBLE);
         btSignOut = (Button) findViewById(R.id.bt_logout);
 
         bedRoom = (TextView) findViewById(R.id.bed_room);
+        bedRoom.setText("Safe"); bedRoom.setTextColor(Color.GREEN);
         livingRoom = (TextView) findViewById(R.id.living_room);
+        livingRoom.setText("Safe"); livingRoom.setTextColor(Color.GREEN);
+
+        nameCurrent = (TextView) findViewById(R.id.text_view_name_current);
+        nameCurrent.setText("Safe House");
+        statusCurrent = (TextView) findViewById(R.id.text_view_status);
+        statusCurrent.setText("at Home"); statusCurrent.setTextColor(Color.MAGENTA);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            email = user.getEmail();
+        }
 
         dref = FirebaseDatabase.getInstance().getReference();
         dref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (email.equals("cris@gmail.com")){
+                    btRegister.setVisibility(View.VISIBLE);
+                    btUserList.setVisibility(View.VISIBLE);
+                }else{
+                    btRegister.setVisibility(View.GONE);
+                    btUserList.setVisibility(View.GONE);
+                }
+
                 Query query = FirebaseDatabase.getInstance().getReference("Users")
                         .orderByChild("status")
                         .equalTo(1);
                 query.addListenerForSingleValueEvent(valueEventListener);
 
                 if (dataSnapshot.child("bedRoom").getValue().toString().equals("1")){
-                    bedRoom.setText("Bed Room is not Safe");
+                    bedRoom.setText("Not Safe");
                     bedRoom.setTextColor(Color.RED);
                     displayNotification();
                     btNotify.setVisibility(View.VISIBLE);
                 }
 
                 if (dataSnapshot.child("livingRoom").getValue().toString().equals("1")){
-                    livingRoom.setText("Living Room is not Safe");
+                    livingRoom.setText("Not Safe");
                     livingRoom.setTextColor(Color.RED);
                     displayNotification();
                     btNotify.setVisibility(View.VISIBLE);
                 }
+
+                Query query1 = FirebaseDatabase.getInstance().getReference("Users");
+                query1.addListenerForSingleValueEvent(valueEventListenerr);
+
             }
 
             @Override
@@ -117,10 +144,10 @@ public class AdminActivity extends AppCompatActivity{
             public void onClick(View v) {
                 FirebaseDatabase.getInstance().getReference("bedRoom")
                         .setValue(0);
-                bedRoom.setText("Bed Room is Safe");bedRoom.setTextColor(Color.BLACK);
+                bedRoom.setText("Safe");bedRoom.setTextColor(Color.GREEN);
                 FirebaseDatabase.getInstance().getReference("livingRoom")
                         .setValue(0);
-                livingRoom.setText("Living Room is Safe");livingRoom.setTextColor(Color.BLACK);
+                livingRoom.setText("Safe");livingRoom.setTextColor(Color.GREEN);
                 btNotify.setVisibility(View.GONE);
             }
         });
@@ -184,6 +211,30 @@ public class AdminActivity extends AppCompatActivity{
             }
         }
 
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener valueEventListenerr = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    if (user.email.equals(email)){
+                        nameCurrent.setText(user.name);
+                    }
+                    if (user.email.equals(email) && user.status == 1){
+                        statusCurrent.setText("at Home"); statusCurrent.setTextColor(Color.MAGENTA);
+                    }else if(user.email.equals(email) && user.status == 0){
+                        statusCurrent.setText("not at Home");statusCurrent.setTextColor(Color.BLUE);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }
         @Override
         public void onCancelled(DatabaseError databaseError) {
 

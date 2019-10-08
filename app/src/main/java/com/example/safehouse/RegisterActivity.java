@@ -88,7 +88,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (phone.isEmpty()) {
-            editTextId.setError(getString(R.string.input_error_phone));
+            editTextId.setError("ID required");
+            editTextId.requestFocus();
+            return;
+        }
+
+        if (Integer.parseInt(phone) >= 162 || Integer.parseInt(phone) <= 0){
+            editTextId.setError("invalid ID");
             editTextId.requestFocus();
             return;
         }

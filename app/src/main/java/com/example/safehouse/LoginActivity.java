@@ -70,17 +70,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    if (editTextEmail.getText().toString().equals("cris@gmail.com")) {
+//                    if (editTextEmail.getText().toString().equals("cris@gmail.com")) {
                         Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
-                    } else {
-                        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
-                    }
+//                    } else {
+//                        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        finish();
+//                    }
                 } else {
                     Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
