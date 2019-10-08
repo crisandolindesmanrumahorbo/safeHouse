@@ -83,7 +83,7 @@ public class AdminActivity extends AppCompatActivity{
         nameCurrent = (TextView) findViewById(R.id.text_view_name_current);
         nameCurrent.setText("Safe House");
         statusCurrent = (TextView) findViewById(R.id.text_view_status);
-        statusCurrent.setText("at Home"); statusCurrent.setTextColor(Color.MAGENTA);
+        statusCurrent.setText("at Home Now"); statusCurrent.setTextColor(Color.MAGENTA);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -227,9 +227,9 @@ public class AdminActivity extends AppCompatActivity{
                         nameCurrent.setText(user.name);
                     }
                     if (user.email.equals(email) && user.status == 1){
-                        statusCurrent.setText("at Home"); statusCurrent.setTextColor(Color.MAGENTA);
+                        statusCurrent.setText("at Home Now"); statusCurrent.setTextColor(Color.MAGENTA);
                     }else if(user.email.equals(email) && user.status == 0){
-                        statusCurrent.setText("not at Home");statusCurrent.setTextColor(Color.BLUE);
+                        statusCurrent.setText("not at Home Now");statusCurrent.setTextColor(Color.BLUE);
                     }
                 }
                 adapter.notifyDataSetChanged();

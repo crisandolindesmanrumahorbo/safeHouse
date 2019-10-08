@@ -52,7 +52,7 @@
             android:fontFamily="@font/source_sans_pro_light"
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/imageView"
-            android:text="You are "
+            android:text="You are"
             android:textSize="16sp"
             />
 
